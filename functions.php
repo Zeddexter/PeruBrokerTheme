@@ -15,6 +15,8 @@ function perubroker_menus(){
 }
 add_action('init','perubroker_menus');
 
+
+
 function perubroker_scripts_styles(){
     wp_enqueue_style('normalize', get_template_directory_uri().'/css/normalize.css', array(),'8.0.1');
     wp_enqueue_style('bootstrap-grid', get_template_directory_uri().'/css/bootstrap-grid.css', array(),'8.0.1');
