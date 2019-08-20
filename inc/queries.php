@@ -179,10 +179,7 @@ return $menu;
    $contador_cat = 0;
    $cat_val  = 0;
    $contador_subcat = 0;
-   $menus = get_terms('admin_menu');
-foreach($menus as $menu){
-  echo $menu->name . " n";
-} 
+  
    ?>
 <form id="category-select" class="category-select" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
 
