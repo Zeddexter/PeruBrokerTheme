@@ -23,6 +23,8 @@ function perubroker_scripts_styles(){
     wp_enqueue_style('googleFont', "http://allfont.es/allfont.css?fonts=bookman-old-style",array(),'1.0.0');
     wp_enqueue_style('googleFont2', "https://fonts.googleapis.com/css?family=Roboto&display=swap",array(),'1.0.0');
 
+    wp_enqueue_style('googleFont3',"https://fonts.googleapis.com/css?family=Raleway:300,400,700&display=swap",array(),'1.0.0');
+
     wp_enqueue_style('swiper','https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css',array(),'3.3.1');
 
     wp_enqueue_style('leaflet','https://unpkg.com/leaflet@1.5.1/dist/leaflet.css',array(),'1.5.1');
@@ -32,7 +34,7 @@ function perubroker_scripts_styles(){
 
 
     //La hoja de estilos principal, cambiar versión para que refresque el cache.
-    wp_enqueue_style('style', get_stylesheet_uri(),array('bootstrap-grid','normalize','googleFont','googleFont2','swiper','leaflet','aos'), '1.0.0');
+    wp_enqueue_style('style', get_stylesheet_uri(),array('bootstrap-grid','normalize','googleFont','googleFont2','googleFont3','swiper','leaflet','aos'), '1.0.0');
 
     wp_enqueue_script('jquery');
     wp_enqueue_script('swiper', get_template_directory_uri().'/js/swiper.min.js',array('jquery'),'3.4.2',true);

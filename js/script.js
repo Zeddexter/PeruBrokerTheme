@@ -95,7 +95,6 @@ $(function () {
     });
  
   //SECCION NOSOTROS - TABS
-  
   var tabButtons = new Swiper('.tabs-buttons', {
     slidesPerView: 'auto',
     freeMode: true,
@@ -117,31 +116,19 @@ $(function () {
   });
 
 // STAF
-  //initialize swiper when document ready
+  
   var swiper = new Swiper('.content-item', {
      slidesPerView: 'auto',
           spaceBetween: 20,
           centeredSlides: true,
           autoplay: {
             delay: 2500,
-            // disableOnInteraction: false,
-            // stopOnLastSlide: true,
         },    
-      breakpoints:{
-       
-       320: {
-          // slidesPerView: 'auto',
-          // spaceBetween: 30,
-          // centeredSlides: true,
-        }
-      }
-    
   });
 
 
   // CLIENTES
 
-  //initialize swiper when document ready
   var swiper = new Swiper('.content-item-clientes', {
       loop: true,
       slidesPerView: 'auto',
@@ -149,27 +136,31 @@ $(function () {
       centeredSlides: true,
       autoplay: {
           delay: 2500,
-          // disableOnInteraction: false,
-          // stopOnLastSlide: true,
       },
-      breakpoints:{
-          320: {
-
-            // slidesPerView: 'auto',
-            // spaceBetween: 30,
-            // centeredSlides: true,
-        },
-      },
-    
   });
-  // MAPA
-    var map = L.map('map').setView([-12.126303, -77.016515], 17);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-    
-    L.marker([-12.126303, -77.016515]).addTo(map)
-        .bindPopup('PERU BROKER S.A.')
-        .openPopup();
 });/* FIN */
+
+
+
+$(function() {
+  $('.pop-up').hide();
+  $('.pop-up').fadeIn(1000);
+  $('section.reportes a').click(function () {return false;});
+  $('#years').prop('disabled', 'disabled');
+
+    var wpcf7Elm = document.querySelector('#wpcf7-f196-o1');
+
+    wpcf7Elm.addEventListener( 'wpcf7mailsent', function( event ) {
+      
+      $('.pop-up').fadeOut(700);
+      $('#overlay').removeClass('blur-in');
+      $('#overlay').addClass('blur-out');
+      $('section.reportes a').unbind('click');
+      $('#years').prop('disabled', false);
+
+    }, false );
+
+ });
+
+ 

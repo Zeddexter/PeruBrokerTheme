@@ -1,7 +1,9 @@
 <!-- SECCION DE REPORTES -->
-        <section class=" reportes tables-page-section" ="service" id="reportes" >
+<section class=" reportes tables-page-section" ="service" id="reportes" >
                     <div class="content content-reportes"><!-- INICIO-CONTENT -->
-                        <div class="section_title text-center">
+                        
+                    
+                    <div class="section_title text-center">
                             <?php
                                 $nav_menu_locations = get_nav_menu_locations();
                                 $menu_id = absint($nav_menu_locations["menu-principal"]);
@@ -11,23 +13,60 @@
                                 }
                             ?>
                             <div class="mensaje-reportes">
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes</p>
+                                <?php mostrar_mensaje_reportes(); ?>
                             </div>
                           
                         </div>
-                    <div class="row" data-aos="flip-right" data-aos-duration="1000">
-                        <div class="col-md-8 col-lg-7">
-                            <div class="select">
-                                <select name="slct" id="slct">
-                                    <option selected disabled>Año</option>
-                                    <option value="1">2019</option>
-                                    <option value="2">2018</option>
-                                    <option value="3">2017</option>
-                                </select>
-                            </div>
-                    
+                        <div class="row " data-aos="flip-right" data-aos-duration="1000" >
+                            
+                            <div class="col-md-8 col-lg-7 "  >
+                                <div class="cover blur-in"id="overlay">
+                            
+                              
+                        
+                            <?php $id_year = get_term_by( 'name', date('Y'), 'year');?>
+
+
+
+
+
+                        <!-- Inicio Formulario -->
+                        <form id="category-select" class="category-select" action="<?php echo esc_url( home_url( '/' ).'#reportes' ); ?>" method="get">
+                        <div class="select">
+                        
+                            <?php
+                                // echo date('Y');
+                                // echo isset($_GET['years'])?$_GET['years']:'';
+                                $args = array(
+                                    //'show_option_none' => __( 'Select category' ),
+                                    'taxonomy'=>'year',
+                                    'name' => 'years',
+                                    'value_field'=>'term_id',
+                                    'order' => 'DESC',
+                                    //'class' => 'select',
+                                    //'exclude' => 1,
+                                    //'value_field'=>'term_id',
+                                    'selected'           => isset($_GET['years'])?$_GET['years']:$id_year->term_id ,
+                                // 'hierarchical'       => 0,
+                                    'echo'             => 0,
+                                );
+                                ?>
+                                <?php $select  = wp_dropdown_categories( $args ); ?>
+                                <?php $replace = "<select$1 onchange='return this.form.submit()'>"; ?>
+                                <?php $select  = preg_replace( '#<select([^>]*)>#', $replace, $select ); ?>
+                                <?php echo $select; ?>
+                                <noscript>
+                                    <input type="submit" value="view" />
+                                </noscript>
+
+
+                        </div><!--Fin select -->
+                    </form><!--Fin formulario -->
+                           
+                           
+                           
                 <!-- tabla estadistica -->
-                    
+                
                         
                             <h3>Estadísticas</h3>
                             <div class="table-responsive estadistica">
@@ -36,25 +75,47 @@
                                         <th>Frecuencia</th>
                                         <th>Archivo</th>
                                     </thead>
-                                    <tr>
-                                        <td>Mensual</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Quincenal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Semanal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    
+​
+                            
+                            <?php //inicio
+                           
+                                $wp_query = new WP_Query( array(
+                                'post_type' => 'estadisticas',
+                                'tax_query' => array(
+                                    array(
+                                        'taxonomy' => 'year',
+                                        'field'    => 'id',
+                                        'terms' => isset($_GET['years'])?$_GET['years']:$id_year->term_id
+                                    )),
+                                'post_status'   => 'publish',
+                                ));
+                           // Loop WordPress
+                           while ($wp_query->have_posts()) : $wp_query->the_post();
+                           ?>
+                            <tr>
+                            
+                                <td>
+                                       <?php echo strip_tags(get_the_term_list( get_the_ID(), 'frecuencia')); ?>
+                                </td>
+                                <td>
+                                <?php    $file = get_field('adj_estadistica');
+                                                    if( $file ): ?>
+                                                    <a href="<?php echo $file['url']; ?>" target="_blank" >Descargar</a> 
+                                            
+                                                    <?php endif; ?>
+                                       
+                                                    </td>
+                            </tr>
+                            <?php endwhile;  wp_reset_postdata(); 
+                            //FIN?>
+                                                                          
                                 </table>
                             </div>
                          
-                    
+​
+                          
                 <!-- fin tabla estadistica -->
-        
+​
                 <!-- tabla fishing report -->
                     
                         
@@ -67,54 +128,43 @@
                                         <th>Frecuencia</th>
                                         <th>Archivo</th>
                                     </thead>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Norte/Centro</td>
-                                        <td>Quincenal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Semanal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>Sur</td>
-                                        <td>Quincenal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Semanal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Norte/Centro</td>
-                                        <td>Quincenal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Semanal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>Sur</td>
-                                        <td>Quincenal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Semanal</td>
-                                        <td>Descargar</td>
-                                    </tr>
+                                    <?php //inicio
+                                            $wp_query = new WP_Query( array(
+                                            'post_type' => 'fishing_report',
+                                            'posts_per_page' => -1,
+                                            'tax_query' => array(
+                                                array(
+                                                    'taxonomy' => 'year',
+                                                    'field'    => 'id',
+                                                    'terms' => isset($_GET['years'])?$_GET['years']:$id_year->term_id
+                                                )),
+                                            'orderby' => 'ID',
+                                            'order' => 'ASC'
+                                            ));
+                                    // Loop WordPress
+                                    while ($wp_query->have_posts()) : $wp_query->the_post(); ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo strip_tags(get_the_term_list( get_the_ID(), 'temporada')); ?>
+                                            </td>
+                                            <td>
+                                                <?php echo strip_tags(get_the_term_list( get_the_ID(), 'regiones')); ?>
+                                            </td>
+                                            <td>
+                                                <?php echo strip_tags(get_the_term_list( get_the_ID(), 'frecuencia')); ?>
+                                            </td>
+                                            <td>
+                                                    <?php    $file = get_field('adj_reporte_pesca');
+                                                    if( $file ): ?>
+                                                    <a href="<?php echo $file['url']; ?>" target="_blank" >Descargar</a> 
+                                            
+                                                    <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                        <?php endwhile;  wp_reset_postdata(); 
+                                        //FIN?> 
+                                    
+                                    
                                 </table>
                             </div>
                         
@@ -133,65 +183,66 @@
                                         <th>Frecuencia</th>
                                         <th>Archivo</th>
                                     </thead>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Norte/Centro</td>
-                                        <td>Quincenal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Semanal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>Sur</td>
-                                        <td>Quincenal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Semanal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Norte/Centro</td>
-                                        <td>Quincenal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Semanal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>Sur</td>
-                                        <td>Quincenal</td>
-                                        <td>Descargar</td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Semanal</td>
-                                        <td>Descargar</td>
-                                    </tr>
+                                    <?php //inicio
+                                            $wp_query = new WP_Query( array(
+                                            'post_type' => 'reportes',
+                                            'tax_query' => array(
+                                                array(
+                                                    'taxonomy' => 'year',
+                                                    'field'    => 'id',
+                                                    'terms' => isset($_GET['years'])?$_GET['years']:$id_year->term_id
+                                                )),
+                                            'posts_per_page' => -1,
+                                            'orderby' => 'ID',
+                                            'order' => 'ASC'
+                                            ));
+                                    // Loop WordPress
+                                    while ($wp_query->have_posts()) : $wp_query->the_post(); ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo strip_tags(get_the_term_list( get_the_ID(), 'temporada')); ?>
+                                            </td>
+                                            <td>
+                                                <?php echo strip_tags(get_the_term_list( get_the_ID(), 'regiones')); ?>
+                                            </td>
+                                            <td>
+                                                <?php echo strip_tags(get_the_term_list( get_the_ID(), 'frecuencia')); ?>
+                                            </td>
+                                            <td>
+                                                    <?php    $file = get_field('adj_reportes');
+                                                    if( $file ): ?>
+                                                    <a href="<?php echo $file['url']; ?>" target="_blank" >Descargar</a> 
+                                            
+                                                    <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                        <?php endwhile;  wp_reset_postdata(); 
+                                        //FIN?> 
                                 </table>
-                            </div>
+                                </div>
+                                </div><!-- Fin de contenido -->
                     </div>
-        
+                    
                     <div class="col">
+                        <div class="pop-up">
+                            <div class="box">
+                            
+                            <p class="form-mensaje">Ingresar datos para que pueda ver los reportes.</p>
+                            <?php mostrar_contacto_reportes(); ?>
+                            
+                            </div>
+                        </div>   
                         <figure>
-                            <img src="img/img_reportes.png" alt="">
+                            <?php mostrar_imagen_reportes(); ?>
                         </figure>
                     </div>
-                </div>
+                </div> <!-- Fin row-->
+                
                 <!-- fin tabla reportes -->
+
+                                         
+
+
                   </div> <!-- FIN-CONTENT -->
             </section>
         <!-- FIN REPORTES -->
