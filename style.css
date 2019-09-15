@@ -1,4 +1,4 @@
-/*
+﻿/*
     Theme Name: Broker_CS
     Theme URI:
     Author: CyberzSoft
@@ -893,14 +893,14 @@ footer .create p a{
         
     }
     header .menu .logo figure.img-logo img{
-        width: 70px;
+        width: 100px;
     }
     header .menu .logo .text-logo{
      margin-left: 40px; 
     }
     header .menu .logo .text-logo h1{
-        font-size: 20px;
-        
+        font-size: 24px;
+        margin-left: 18px;
     }
     /* MENU */
 /*-- MENU MOBILE--*/
@@ -927,7 +927,7 @@ nav.lista-menu{
     position: relative;
     background: none;
     top: 0;
-    left: 40px;
+    left: 0;
     font-size: 18px;
     overflow-y: hidden;
     width: 620px;
@@ -1052,7 +1052,7 @@ nav.lista-menu{
     
     
 }
-@media only screen and (min-width: 1400px){
+@media only screen and (min-width: 1520px){
     header .menu .content-menu{
      width: 1400px;   
     }
@@ -1067,6 +1067,7 @@ nav.lista-menu{
     }
     header .menu .logo .text-logo h1{
         font-size: 24px;
+       
         
     }
     section.hero .mensaje-principal{
@@ -1258,7 +1259,7 @@ nav.lista-menu{
 .pop-up {
     position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
   height: auto;
   top: 0;
   bottom: 0;

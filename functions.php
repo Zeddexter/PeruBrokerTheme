@@ -1,6 +1,10 @@
 <?php
 /** Consultas reutilizables  **/
+//Tablas personalizadas
+require get_template_directory().'/inc/database.php';
 require get_template_directory().'/inc/queries.php';
+
+require get_template_directory().'/inc/opciones.php';
 
 function perubroker_setup(){
     //Habiliar imagenes destacadas
@@ -40,7 +44,8 @@ function perubroker_scripts_styles(){
     wp_enqueue_script('swiper', get_template_directory_uri().'/js/swiper.min.js',array('jquery'),'3.4.2',true);
     wp_enqueue_script('leaflet','https://unpkg.com/leaflet@1.5.1/dist/leaflet.js',array('swiper'),"1.5.1",true);
     wp_enqueue_script('aos','https://unpkg.com/aos@2.3.1/dist/aos.js',array(),"2.3.1",true);
-    wp_enqueue_script('script', get_template_directory_uri().'/js/script.js',array('jquery','swiper','leaflet','aos'),'1.0.0',true);
+    wp_enqueue_script('checkbox', get_template_directory_uri().'/js/checkboxjs.js',array('aos'),'1.0.0',true);
+    wp_enqueue_script('script', get_template_directory_uri().'/js/script.js',array('jquery','checkbox','swiper','leaflet','aos'),'1.0.0',true);
 
 }
 add_action('wp_enqueue_scripts','perubroker_scripts_styles');
